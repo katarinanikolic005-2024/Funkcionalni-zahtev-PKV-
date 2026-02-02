@@ -1,0 +1,36 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object FDConnection: TFDConnection
+    Params.Strings = (
+      'DriverID=SQLite')
+    Left = 400
+    Top = 192
+  end
+  object SQLiteDriver: TFDPhysSQLiteDriverLink
+    Left = 400
+    Top = 240
+  end
+  object qryUsers: TFDQuery
+    Connection = FDConnection
+    Left = 200
+    Top = 184
+  end
+  object qryProducts: TFDQuery
+    Connection = FDConnection
+    Left = 216
+    Top = 240
+  end
+  object qryOrders: TFDQuery
+    Connection = FDConnection
+    Left = 224
+    Top = 292
+  end
+end

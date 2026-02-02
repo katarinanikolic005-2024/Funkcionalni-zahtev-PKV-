@@ -1,0 +1,69 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'Form3'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object ScrollBox1: TScrollBox
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Viewport.Width = 640.000000000000000000
+    Viewport.Height = 480.000000000000000000
+    object layContent: TLayout
+      Align = Top
+      Size.Width = 640.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object lblTitle: TLabel
+        Align = HorzCenter
+        StyledSettings = [Family, Style, FontColor]
+        Position.X = 242.000000000000000000
+        Size.Width = 156.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 24.000000000000000000
+        Text = 'Registracija'
+        TabOrder = 0
+      end
+      object btnRegister: TButton
+        Position.X = 328.000000000000000000
+        Position.Y = 196.000000000000000000
+        TabOrder = 1
+        Text = 'Kreiraj nalog'
+        TextSettings.Trimming = None
+      end
+      object edtPassword: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 2
+        Position.X = 176.000000000000000000
+        Position.Y = 236.000000000000000000
+      end
+      object edtUsername: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 3
+        Position.X = 176.000000000000000000
+        Position.Y = 148.000000000000000000
+      end
+      object lblUsername: TLabel
+        Position.X = 68.000000000000000000
+        Position.Y = 153.000000000000000000
+        Text = 'Korisnicko ime'
+        TabOrder = 4
+      end
+      object lblPassword: TLabel
+        Position.X = 68.000000000000000000
+        Position.Y = 241.000000000000000000
+        Text = 'Lozinka'
+        TabOrder = 5
+      end
+    end
+  end
+end

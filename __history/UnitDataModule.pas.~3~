@@ -1,0 +1,97 @@
+﻿unit UnitDataModule;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef,
+  FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteWrapper.Stat, System.IOUtils,
+  FMX.Dialogs;
+
+type
+  TdmPKV = class(TDataModule)
+    FDConnection: TFDConnection;
+    SQLiteDriver: TFDPhysSQLiteDriverLink;
+    qryUsers: TFDQuery;
+    qryProducts: TFDQuery;
+    qryOrders: TFDQuery;
+    procedure DataModuleCreate(Sender: TObject);
+  private
+    procedure CreateTables;
+    procedure AddTestData;
+  public
+    CurrentUserID: Integer;
+    CurrentUserRole: string;
+  end;
+
+var
+  dmPKV: TdmPKV;
+
+implementation
+
+{%CLASSGROUP 'FMX.Controls.TControl'}
+
+{$R *.dfm}
+
+procedure TdmPKV.CreateTables;
+begin
+  // Users tabela
+  FDConnection.ExecSQL(
+    'CREATE TABLE IF NOT EXISTS Users (' +
+    'ID INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+    'Username TEXT UNIQUE NOT NULL, ' +
+    'Password TEXT NOT NULL, ' +
+    'Role TEXT DEFAULT "Kupac")');
+
+  // Products tabela
+  FDConnection.ExecSQL(
+    'CREATE TABLE IF NOT EXISTS Products (' +
+    'ID INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+    'Naziv TEXT NOT NULL, ' +
+    'Vrsta TEXT, ' +
+    'Cena REAL NOT NULL, ' +
+    'Opis TEXT, ' +
+    'SlikaPath TEXT)');
+
+  // Orders tabela
+  FDConnection.ExecSQL(
+    'CREATE TABLE IF NOT EXISTS Orders (' +
+    'ID INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+    'UserID INTEGER NOT NULL, ' +
+    'Datum DATE NOT NULL, ' +
+    'Status TEXT DEFAULT "Nova", ' +
+    'UkupnaCena REAL NOT NULL, ' +
+    'Napomena TEXT, ' +
+    'FOREIGN KEY (UserID) REFERENCES Users (ID))');
+end;
+
+procedure TdmPKV.AddTestData;
+begin
+  // Dodaj test proizvode ako ne postoje
+  FDConnection.ExecSQL(
+    'INSERT OR IGNORE INTO Products (Naziv, Vrsta, Cena, Opis) VALUES ' +
+    '("Torta sa jagodama", "Torta", 2500, "Sveža torta sa voćem"), ' +
+    '("Čokoladni kolač", "Kolač", 150, "Kremasti čokoladni kolač"), ' +
+    '("Makaroni sa pistaćem", "Slatkiš", 80, "Hrskavi makaroni")');
+end;
+
+procedure TdmPKV.DataModuleCreate(Sender: TObject);
+var
+  DBPath: string;
+begin
+  DBPath := TPath.Combine(TPath.GetDocumentsPath, 'PKV.db');
+  FDConnection.Params.Values['Database'] := DBPath;
+  try
+    FDConnection.Connected := True;
+    CreateTables;
+    AddTestData;  // Dodaje test podatke
+  except
+    on E: Exception do
+      ShowMessage('Greška baze: ' + E.Message);
+  end;
+end;
+
+end.

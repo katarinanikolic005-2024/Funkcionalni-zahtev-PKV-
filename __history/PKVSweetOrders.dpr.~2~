@@ -1,0 +1,16 @@
+program PKVSweetOrders;
+
+uses
+  System.StartUpCopy,
+  FMX.Forms,
+  Unit1 in 'Unit1.pas' {Form1},
+  UnitDataModule in 'UnitDataModule.pas' {dmPKV: TDataModule};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TdmPKV, dmPKV);
+  Application.Run;
+end.

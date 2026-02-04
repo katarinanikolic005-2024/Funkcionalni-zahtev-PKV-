@@ -1,0 +1,64 @@
+object frmSignIn: TfrmSignIn
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object imgBg: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    object Label1: TLabel
+      StyledSettings = [Family, FontColor]
+      Position.X = 176.000000000000000000
+      Position.Y = 110.000000000000000000
+      Size.Width = 280.000000000000000000
+      Size.Height = 144.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'Label1Style1'
+      TextSettings.Font.Size = 30.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      Text = 'Ukusni kolaci i torte na jednom mestu'
+      TabOrder = 0
+    end
+    object Button1: TButton
+      Position.X = 216.000000000000000000
+      Position.Y = 304.000000000000000000
+      Size.Width = 177.000000000000000000
+      Size.Height = 38.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Nastavite putem Google-a'
+      TextSettings.Trimming = None
+    end
+    object Button2: TButton
+      Position.X = 216.000000000000000000
+      Position.Y = 360.000000000000000000
+      Size.Width = 177.000000000000000000
+      Size.Height = 36.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Nastavite putem Facebook-a'
+      TextSettings.Trimming = None
+    end
+    object btnPrijaviSe: TButton
+      Position.X = 216.000000000000000000
+      Position.Y = 248.000000000000000000
+      Size.Width = 177.000000000000000000
+      Size.Height = 36.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Prijavi se'
+      TextSettings.Trimming = None
+      OnClick = btnPrijaviSeClick
+    end
+  end
+end

@@ -1,0 +1,123 @@
+unit UnitLogin;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
+  FMX.StdCtrls, FMX.Controls.Presentation, FMX.Edit, FMX.Objects,
+  FMX.Layouts,
+  UnitSignIn,       // ? ako postoji po?etni ekran
+  UnitRegister,     // ? ekran za registraciju
+  UnitMain;         // ? glavni ekran nakon uspešnog logina (promeni ime ako se druga?ije zove)
+
+type
+  TfrmLogin = class(TForm)
+    recOverlay: TRectangle;
+    lblTitle: TLabel;
+    lblSubtitle: TLabel;
+    edtEmail: TEdit;
+    edtPassword: TEdit;
+    btnShowPassword: TSpeedButton;
+    btnLogin: TButton;
+    lblNoAccount: TLabel;
+    procedure FormCreate(Sender: TObject);
+    procedure btnShowPasswordClick(Sender: TObject);
+    procedure btnLoginClick(Sender: TObject);
+    procedure lblNoAccountClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmLogin: TfrmLogin;
+
+implementation
+
+{$R *.fmx}
+
+procedure TfrmLogin.FormCreate(Sender: TObject);
+begin
+  edtEmail.Text := '';
+  edtPassword.Text := '';
+  edtEmail.SetFocus;
+end;
+
+procedure TfrmLogin.btnShowPasswordClick(Sender: TObject);
+begin
+  edtPassword.Password := not edtPassword.Password;
+
+  // Promena ikone oka (koristi Unicode znakove za oko)
+  if edtPassword.Password then
+    btnShowPassword.Text := '??'         // otvoreno oko
+  else
+    btnShowPassword.Text := '?????';      // zatvoreno oko (ili drugi znak ako želiš)
+end;
+
+procedure TfrmLogin.btnLoginClick(Sender: TObject);
+begin
+  // Osnovna validacija pre bilo kakve provere
+  if edtEmail.Text.Trim.IsEmpty then
+  begin
+    ShowMessage('Unesite email adresu.');
+    edtEmail.SetFocus;
+    Exit;
+  end;
+
+  if edtPassword.Text.Trim.IsEmpty then
+  begin
+    ShowMessage('Unesite lozinku.');
+    edtPassword.SetFocus;
+    Exit;
+  end;
+
+  // --------------------------------------------------------------------
+  // OVDE ?E KASNIJE DO?I PRAVA PROVERA IZ BAZE (dmPKV, qryUsers)
+  // Trenutno je privremena provera radi testiranja
+  // --------------------------------------------------------------------
+
+  if (LowerCase(edtEmail.Text) = 'pera123@gmail.com') and
+     (edtPassword.Text = '123456') then
+  begin
+    ShowMessage('Uspešno ste se prijavili!');
+
+    // ?iš?enje polja pre prelaska na glavni ekran
+    edtEmail.Text := '';
+    edtPassword.Text := '';
+
+    // Prelazak na glavni ekran (promeni ime forme ako se druga?ije zove)
+    if Assigned(frmMain) then
+    begin
+      frmMain.Show;
+      Self.Hide;
+    end
+    else
+    begin
+      ShowMessage('Glavna forma (frmMain) nije kreirana!');
+    end;
+  end
+  else
+  begin
+    ShowMessage('Pogrešan email ili lozinka.');
+    edtPassword.Text := '';           // sigurnosno brisanje lozinke
+    edtPassword.SetFocus;
+  end;
+end;
+
+procedure TfrmLogin.lblNoAccountClick(Sender: TObject);
+begin
+  // Otvaranje ekrana za registraciju
+  if Assigned(frmRegister) then
+  begin
+    frmRegister.Show;
+    Self.Hide;
+  end
+  else
+  begin
+    ShowMessage('Forma za registraciju (frmRegister) nije kreirana!');
+  end;
+end;
+
+end.

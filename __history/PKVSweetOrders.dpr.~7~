@@ -1,0 +1,20 @@
+program PKVSweetOrders;
+
+uses
+  System.StartUpCopy,
+  FMX.Forms,
+  UnitLogin in 'UnitLogin.pas' {frmLogin},
+  UnitSplash in 'UnitSplash.pas' {frmSplash},
+  UnitSignIn in 'UnitSignIn.pas' {frmSignIn},
+  UnitRegister in 'UnitRegister.pas' {frmRegister};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TfrmSplash, frmSplash);
+  Application.CreateForm(TfrmLogin, frmLogin);
+  Application.CreateForm(TfrmSignIn, frmSignIn);
+  Application.CreateForm(TfrmRegister, frmRegister);
+  Application.Run;
+end.

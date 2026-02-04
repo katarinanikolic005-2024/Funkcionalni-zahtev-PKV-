@@ -1,0 +1,75 @@
+﻿unit UnitDataModule;
+
+interface
+
+uses
+  System.SysUtils, System.Classes,
+  System.IOUtils,
+  FMX.Dialogs,
+  Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Stan.Param,
+  FireDAC.UI.Intf, FireDAC.FMXUI.Wait,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Comp.Client, FireDAC.Comp.DataSet,
+  FireDAC.Phys, FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef,
+  FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteWrapper.Stat, FireDAC.DatS,
+  FireDAC.DApt;
+
+type
+  TdmPKV = class(TDataModule)
+    FDConnection: TFDConnection;
+    SQLiteDriver: TFDPhysSQLiteDriverLink;
+    qryUsers: TFDQuery;
+
+    procedure DataModuleCreate(Sender: TObject);
+  private
+    procedure CreateTables;
+  public
+    CurrentUserID: Integer;
+    CurrentUserRole: string;
+  end;
+
+var
+  dmPKV: TdmPKV;
+
+implementation
+
+{%CLASSGROUP 'FMX.Controls.TControl'}
+
+{$R *.dfm}
+
+procedure TdmPKV.CreateTables;
+begin
+  FDConnection.ExecSQL(
+    'CREATE TABLE IF NOT EXISTS Users (' +
+    '  ID       INTEGER PRIMARY KEY AUTOINCREMENT,' +
+    '  Username TEXT    UNIQUE NOT NULL,' +
+    '  Password TEXT    NOT NULL,' +
+    '  Role     TEXT    DEFAULT "Kupac"' +
+    ');'
+  );
+end;
+
+procedure TdmPKV.DataModuleCreate(Sender: TObject);
+var
+  DBPath: string;
+begin
+  DBPath := TPath.Combine(TPath.GetDocumentsPath, 'PKV.db');
+
+  FDConnection.Params.Clear;
+  FDConnection.Params.Values['DriverID']   := 'SQLite';
+  FDConnection.Params.Values['Database']   := DBPath;
+  FDConnection.Params.Values['LockingMode'] := 'Normal';
+  FDConnection.FormatOptions.StrsTrim      := False;
+
+  try
+    FDConnection.Connected := True;
+    CreateTables;
+  except
+    on E: Exception do
+      ShowMessage('Greška pri povezivanju na bazu:' + sLineBreak + E.Message);
+  end;
+end;
+
+end.

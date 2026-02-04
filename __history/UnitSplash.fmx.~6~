@@ -1,0 +1,44 @@
+object frmSplash: TfrmSplash
+  Left = 0
+  Top = 0
+  Caption = 'Home page'
+  ClientHeight = 672
+  ClientWidth = 804
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object imgBackground: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Align = Client
+    Size.Width = 804.000000000000000000
+    Size.Height = 672.000000000000000000
+    Size.PlatformDefault = False
+    object lblDobrodosli: TLabel
+      StyledSettings = [Style, FontColor]
+      Position.X = 320.000000000000000000
+      Position.Y = 320.000000000000000000
+      Size.Width = 169.000000000000000000
+      Size.Height = 53.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Family = 'Arial'
+      TextSettings.Font.Size = 32.000000000000000000
+      TextSettings.HorzAlign = Center
+      Text = 'Dobrodosli'
+      TabOrder = 0
+    end
+    object btnDalje: TButton
+      Position.X = 302.000000000000000000
+      Position.Y = 400.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Dalje'
+      TextSettings.Trimming = None
+      OnClick = btnDaljeClick
+    end
+  end
+end

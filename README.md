@@ -1,1 +1,0 @@
-Ovo je izmena na sekundarnom branchu
